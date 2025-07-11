@@ -1,31 +1,76 @@
 <template>
-  <h3>{{ info }}</h3>
-  <p>{{ someInfo }}</p>
+  <input type="text" v-model="userName" placeholder="Name" />
+  <input type="text" v-model="userPass" placeholder="Password" />
+  <input type="text" v-model="userEmail" placeholder="Email" />
+  <p className="error">{{ error }}</p>
+  <button @click="sendData">Send</button>
 
-  <button type="button" @click="userData()">Send</button>
+  <p>{{ users }}</p>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      info: "Title!",
-      someInfo: "Anons of message",
+      users: [],
+      error: "",
+      userName: "",
+      userPass: "",
+      userEmail: "",
     };
   },
   methods: {
-    userData() {
-      this.someInfo = 'Some new'
-    }
-  }
+    sendData() {
+      if (this.userName == "") {
+        this.error = "Name is required";
+        return;
+      } else if (this.userPass == "") {
+        this.error = "Password is required";
+        return;
+      } else if (this.userEmail == "") {
+        this.error = "Email is required";
+        return;
+      }
+
+      this.users.push({
+        name: this.userName,
+        pass: this.userPass,
+        email: this.userEmail,
+      });
+    },
+  },
 };
 </script>
 
 <style scoped>
-h3 {
-  font-weight: lighter;
+input {
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 1px solid silver;
+  outline: none;
+  padding: 10px 15px;
 }
-p {
-  color: rgb(204, 28, 28);
+button {
+  border: 0;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px 15px;
+  background: #6cd670;
+  color: #167f3d;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 500ms ease;
+}
+button:hover {
+  transform: translateY(-5px);
+}
+.user {
+  width: 500px;
+  margin-top: 20px;
+  border: 1px solid silver;
+  color: #222;
+  padding: 20px;
+  border-radius: 5px;
 }
 </style>
