@@ -5,7 +5,16 @@
   <p className="error">{{ error }}</p>
   <button @click="sendData">Send</button>
 
-  <p>{{ users }}</p>
+  <div v-if="this.users.length == 0">Don't have users</div>
+  <div v-else-if="this.users.length == 1">Users has 1</div>
+  <div v-else className="user">Users has more than 1 element</div>
+
+  <div v-for="(el, index) in users" :key="index" className="user">
+    <h3>{{ el.name }}</h3>
+    <p>
+      {{ el.email }} - <b>{{ el.pass }}</b>
+    </p>
+  </div>
 </template>
 
 <script>
@@ -31,6 +40,8 @@ export default {
         this.error = "Email is required";
         return;
       }
+
+      this.error = "";
 
       this.users.push({
         name: this.userName,
